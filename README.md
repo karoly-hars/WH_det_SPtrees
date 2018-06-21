@@ -29,6 +29,5 @@ for more information about the arguments
 ## Example for displayed plot:
 Figure 1 shows the classification results from the different root nodes, and Figure 2 shows the network layout with the wormhole nodes and the predicted wormhole nodes colored blue and pink respectively.
 
-- Qualitative results:
 ![Screenshot](docs/plot_example.png)
 

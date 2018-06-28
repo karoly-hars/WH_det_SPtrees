@@ -143,7 +143,7 @@ def main():
     parser.add_argument("-wormhole_min_dist", help="minimum hop-distance between the wormholes endpoints", type=int, default=6)
     
     # args for the detection algortihm
-    parser.add_argument("-k", help="minimum hop-distance between the root nodes of the detection algorithm", type=int, default=10)
+    parser.add_argument("-k", help="minimum hop-distance between the root nodes of the detection algorithm", type=int, default=7)
     parser.add_argument("-th", help="classification threshold of the detection alg", type=float, default=5)
     
     # args for visualization

@@ -7,11 +7,12 @@ Károly Harsányi, Attila Kiss, Tamás Szirányi:
 
 
 ### Requirements
-- python 3.5 or 3.6
-- matplotlib
-- numpy
-- networkx
-- scipy
+The code was tested with:
+- python 3.5 and 3.6
+- matplotlib 2.2.3
+- numpy 1.15.4
+- networkx 2.2
+- scipy 1.2.0
 
 
 ### Guide

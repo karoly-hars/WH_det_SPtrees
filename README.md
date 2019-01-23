@@ -27,7 +27,7 @@ python3 detect_wormhole.py -h
 for more information about the arguments
 
 
-## Example for the displayed plot:
+### Example for the displayed plot:
 Figure 1 shows the classification results from the different root nodes, and Figure 2 shows the network layout with the wormhole nodes and the predicted wormhole nodes colored blue and pink respectively.
 
 ![Screenshot](docs/plot_example.png)

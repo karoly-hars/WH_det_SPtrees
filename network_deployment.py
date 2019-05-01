@@ -26,7 +26,7 @@ def generate_square(num_nodes, radius, side_len):
             positions_.append(positions[i])
         
         # calculate pairwise distances
-        y = scipy.spatial.distance.pdist(np.asarray(positions_), 'euclidean')
+        y = scipy.spatial.distance.pdist(np.asarray(positions_), "euclidean")
         dist_matrix = scipy.spatial.distance.squareform(y)
         
         # add edges based on radius
@@ -38,7 +38,7 @@ def generate_square(num_nodes, radius, side_len):
         if nx.is_connected(connectivity_graph):
             return positions, connectivity_graph
             
-    assert False, 'Error: the graph is not connected with these parameters!\n'    
+    assert False, "Error: the graph is not connected with these parameters!\n"    
 
 
 def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
@@ -64,7 +64,7 @@ def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
             positions_.append(positions[i])
         
         # calculate pairwise distances
-        y = scipy.spatial.distance.pdist(np.asarray(positions_), 'euclidean')
+        y = scipy.spatial.distance.pdist(np.asarray(positions_), "euclidean")
         dist_matrix = scipy.spatial.distance.squareform(y)
 
         # add edges based on radius and param p
@@ -84,7 +84,7 @@ def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
         if nx.is_connected(connectivity_graph):
             return positions, connectivity_graph
             
-    assert False, 'Error: the graph is not connected with these parameters!\n'    
+    assert False, "Error: the graph is not connected with these parameters!\n"    
 
 
 def generate_grid(num_nodes, radius, side_len, noise=0.75):
@@ -96,7 +96,7 @@ def generate_grid(num_nodes, radius, side_len, noise=0.75):
     :param noise: noise used for perturbation
     :return: A list of generated node positions and the network connectivity graph
     """
-    assert (math.sqrt(num_nodes).is_integer()), 'the number of sensors must be a square number'
+    assert (math.sqrt(num_nodes).is_integer()), "the number of sensors must be a square number"
 
     # try 1000 times, to generate a random graph with these parameters    
     for X in range(0, 1000):
@@ -117,7 +117,7 @@ def generate_grid(num_nodes, radius, side_len, noise=0.75):
                 positions[i + j * h] = [i * node_dist + rx, j * node_dist + ry]
                 positions_.append(positions[i + j * h])
                 
-        y = scipy.spatial.distance.pdist(np.asarray(positions_), 'euclidean')
+        y = scipy.spatial.distance.pdist(np.asarray(positions_), "euclidean")
         dist_matrix = scipy.spatial.distance.squareform(y)
 
         # add edges based on radius
@@ -129,7 +129,7 @@ def generate_grid(num_nodes, radius, side_len, noise=0.75):
         if nx.is_connected(connectivity_graph):
             return positions, connectivity_graph
             
-    assert False, 'Error: the graph is not connected with these parameters!\n'    
+    assert False, "Error: the graph is not connected with these parameters!\n"    
 
 
 def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
@@ -142,7 +142,7 @@ def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
     :param noise: noise used for perturbation
     :return: A list of generated node positions and the network connectivity graph
     """
-    assert (math.sqrt(num_nodes).is_integer()), 'Error: the number of sensors must be a square number\n'
+    assert (math.sqrt(num_nodes).is_integer()), "Error: the number of sensors must be a square number\n"
     
     radius2 = radius
     radius1 = radius*p 
@@ -166,7 +166,7 @@ def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
                 positions[i + j * h] = [i * node_dist + rx, j * node_dist + ry]
                 positions_.append(positions[i + j * h])
                 
-        y = scipy.spatial.distance.pdist(np.asarray(positions_), 'euclidean')
+        y = scipy.spatial.distance.pdist(np.asarray(positions_), "euclidean")
         dist_matrix = scipy.spatial.distance.squareform(y)
 
         # add edges based on radius
@@ -184,4 +184,4 @@ def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
         if nx.is_connected(connectivity_graph):
             return positions, connectivity_graph
             
-    assert False, 'Error: the graph is not connected with these parameters!\n'        
+    assert False, "Error: the graph is not connected with these parameters!\n"        

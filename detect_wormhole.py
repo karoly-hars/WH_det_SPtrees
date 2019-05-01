@@ -27,7 +27,7 @@ def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
         to_rem = [key for key in distances if distances[key] < min_dist]
         nodes = [x for x in nodes if x not in to_rem]
     
-    assert len(root_nodes) > 1, 'the number of root nodes should be at least 2. choose a smaller k parameter'
+    assert len(root_nodes) > 1, "the number of root nodes should be at least 2. choose a smaller k parameter"
     
     return root_nodes
 
@@ -50,11 +50,11 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
     
     # run detection from each root node
     for idx, root_node in enumerate(root_nodes):
-        print('running detection from root {}/{}'.format(idx+1, len(root_nodes)))
+        print("running detection from root {}/{}".format(idx+1, len(root_nodes)))
         
         if make_plot:
             plt.subplot(len(root_nodes)+1, 1, (idx+1))
-            plt.title('root {}:'.format(idx), loc='left')
+            plt.title("root {}:".format(idx), loc="left")
         
         # we do not test the root and its direct neighbors in this round
         to_bypass = [root_node] + list(connectivity_graph_with_wormhole.neighbors(root_node))
@@ -79,9 +79,9 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
                 var_matrix[idx, node] = variance_in_dd
                 
                 if make_plot:
-                    plt.plot(node, variance_in_dd, color='#00ff00', marker='.')
+                    plt.plot(node, variance_in_dd, color="#00ff00", marker=".")
                     if node in endpoints:
-                        plt.plot(node, variance_in_dd, 'bo')
+                        plt.plot(node, variance_in_dd, "bo")
             
             # for the bypassed nodes store nan
             if node in to_bypass:
@@ -106,66 +106,66 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
     if make_plot:
         plt.subplot(len(root_nodes)+1, 1, len(root_nodes)+1)
         for node in range(0, len(connectivity_graph_with_wormhole)):
-            plt.plot(node, avgs[node], color='#00ff00', marker='.')
+            plt.plot(node, avgs[node], color="#00ff00", marker=".")
             if node in candidates:
-                plt.plot(node, avgs[node], color='#ff99ff', marker='D', markersize=6)
+                plt.plot(node, avgs[node], color="#ff99ff", marker="D", markersize=6)
             if node in endpoints:
-                plt.plot(node, avgs[node], color='b', marker='o', markersize=3)
-        plt.plot([0, len(connectivity_graph_with_wormhole)], [final_threshold, final_threshold], 'r-')
+                plt.plot(node, avgs[node], color="b", marker="o", markersize=3)
+        plt.plot([0, len(connectivity_graph_with_wormhole)], [final_threshold, final_threshold], "r-")
     
     return candidates
 
 
 def main(args):
 
-    print('Generating sensor network...')
+    print("Generating sensor network...")
 
-    if args.deployment_type == 'random':
-        if args.communication_model == 'UDG':
+    if args.deployment_type == "random":
+        if args.communication_model == "UDG":
             positions, connectivity_graph = network_deployment.generate_square(args.num_nodes, args.comm_radius,
                                                                                args.side_len)
         else:
             positions, connectivity_graph = network_deployment.generate_square_quasi(args.num_nodes, args.comm_radius,
                                                                                      args.side_len)
     else:
-        if args.communication_model == 'UDG':
+        if args.communication_model == "UDG":
             positions, connectivity_graph = network_deployment.generate_grid(args.num_nodes, args.comm_radius,
                                                                              args.side_len)
         else:
             positions, connectivity_graph = network_deployment.generate_grid_quasi(args.num_nodes, args.comm_radius,
                                                                                    args.side_len)
 
-    print('Done.')
+    print("Done.")
 
     degrees = nx.degree(connectivity_graph)
     avg_degree = np.mean([deg for node, deg in degrees])
     max_degree = np.max([deg for node, deg in degrees])
 
-    print('\navg. # of neighbours', avg_degree)
-    print('max. # of neighbours', max_degree)
+    print("\navg. # of neighbours", avg_degree)
+    print("max. # of neighbours", max_degree)
 
-    print('\nWormhole type: {}, wormhole radius: {}, endpoints min. distance: {}'.
+    print("\nWormhole type: {}, wormhole radius: {}, endpoints min. distance: {}".
           format(args.wormhole_type, args.wormhole_radius, args.wormhole_min_dist))
-    print('Inserting wormhole...')
+    print("Inserting wormhole...")
     connectivity_graph_with_wormhole, endpoints1, endpoints2 = insert_wormhole.insert_wormhole(positions,
                                                                                                connectivity_graph,
                                                                                                args.wormhole_radius,
                                                                                                args.wormhole_type,
                                                                                                args.wormhole_min_dist)
-    print('Done.')
+    print("Done.")
 
-    print('\nMinimum root point distance(k): {}'.format(args.k))
-    print('Choosing root points...')
+    print("\nMinimum root point distance(k): {}".format(args.k))
+    print("Choosing root points...")
     root_nodes = get_root_nodes(connectivity_graph_with_wormhole, args.k)
-    print('Done.')
+    print("Done.")
 
-    print('\nLambda threshold for detection(lambda): {}'.format(args.th))
-    print('Make plot: {}'.format(args.make_plot))
+    print("\nLambda threshold for detection(lambda): {}".format(args.th))
+    print("Make plot: {}".format(args.make_plot))
     
-    print('\nRunning wormhole detection...')
+    print("\nRunning wormhole detection...")
     candidates = find_wormhole(connectivity_graph_with_wormhole, root_nodes,
                                args.th, endpoints1+endpoints2, args.make_plot)
-    print('Done.')
+    print("Done.")
 
     # calculate confusion matrix
     positives = set(candidates)
@@ -182,23 +182,23 @@ def main(args):
     # negatives in WHs
     false_negatives = negatives.intersection(wormholes)
 
-    print('\nConfusion matrix:')
+    print("\nConfusion matrix:")
     print(len(true_positives), len(false_negatives))
     print(len(false_positives), len(true_negatives))
 
     if args.make_plot:
         plt.figure(2)
         nx.draw_networkx(connectivity_graph, pos=positions, node_size=10, linewidths=0,
-                         edge_color='#00ff00', with_labels=False)
+                         edge_color="#00ff00", with_labels=False)
 
         for node in candidates:  # candidates = pink
-            plt.plot(positions[node][0], positions[node][1], color='#ff99ff', marker='D', markersize=4)
+            plt.plot(positions[node][0], positions[node][1], color="#ff99ff", marker="D", markersize=4)
 
         for endpoint in (endpoints1 + endpoints2):  # wormhole node = blue
-            plt.plot(positions[endpoint][0], positions[endpoint][1],  color='b', marker='o', markersize=2)
+            plt.plot(positions[endpoint][0], positions[endpoint][1],  color="b", marker="o", markersize=2)
         
         for idx, root_node in enumerate(root_nodes):  # root nodes = black
-            plt.plot(positions[root_node][0], positions[root_node][1], marker='D', color='k', markersize=4)
+            plt.plot(positions[root_node][0], positions[root_node][1], marker="D", color="k", markersize=4)
             plt.annotate(str(idx), xy=(positions[root_node][0], positions[root_node][1]))
         
         plt.show()
@@ -208,11 +208,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     # args for generating the network
-    parser.add_argument("-deployment_type", help="deployment model. possible choices: 'grid' and 'random'",
-                        choices=['grid', 'random'], default='random')
+    parser.add_argument("-deployment_type", help="deployment model. possible choices: \"grid\" and \"random\"",
+                        choices=["grid", "random"], default="random")
     parser.add_argument("-communication_model",
-                        help="communication model. possible choices: unit-disk-graph->'UDG' "
-                             "and quasi-unit-disk-graph->'QUDG'", choices=['UDG', 'QUDG'], default='UDG')
+                        help="communication model. possible choices: unit-disk-graph->\"UDG\" "
+                             "and quasi-unit-disk-graph->\"QUDG\"", choices=["UDG", "QUDG"], default="UDG")
     parser.add_argument("-num_nodes", help="the number of sensors in the network", type=int, default=900)
     parser.add_argument("-comm_radius", help="the communication radius of the sensors", type=float, default=0.75)
     parser.add_argument("-side_len", help="the size of the observed area", type=int, default=10)
@@ -234,8 +234,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    print('Network type: {}, {}.'.format(args.deployment_type, args.communication_model))
-    print('Number of sensors: {}, communication radius: {}, area of the observed region: {}.'.format(args.num_nodes,
+    print("Network type: {}, {}.".format(args.deployment_type, args.communication_model))
+    print("Number of sensors: {}, communication radius: {}, area of the observed region: {}.".format(args.num_nodes,
                                                                                                      args.comm_radius,
                                                                                                      args.side_len**2))
     main(args)

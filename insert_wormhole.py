@@ -44,7 +44,7 @@ def insert_wormhole(positions, connectivity_graph, wormhole_radius, wormhole_typ
         endpoint2 = random.choice(possible_endpoint2s)
         
         # calculate distances
-        Y = scipy.spatial.distance.pdist(np.asarray(list(positions.values())), 'euclidean')
+        Y = scipy.spatial.distance.pdist(np.asarray(list(positions.values())), "euclidean")
         dist_matrix = scipy.spatial.distance.squareform(Y)
         
         endpoints1 = [endpoint1]
@@ -68,4 +68,4 @@ def insert_wormhole(positions, connectivity_graph, wormhole_radius, wormhole_typ
         
         return modified_graph, endpoints1, endpoints2
         
-    assert len(possible_endpoint2s) > 0, 'Error: unable to generate a wormhole with these parameters.\n'
+    assert len(possible_endpoint2s) > 0, "Error: unable to generate a wormhole with these parameters.\n"

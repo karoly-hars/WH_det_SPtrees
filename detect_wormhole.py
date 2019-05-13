@@ -117,7 +117,6 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
 
 
 def main(args):
-
     print("Generating sensor network...")
 
     if args.deployment_type == "random":
@@ -205,7 +204,6 @@ def main(args):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser()
     # args for generating the network
     parser.add_argument("-deployment_type", help="deployment model. possible choices: \"grid\" and \"random\"",

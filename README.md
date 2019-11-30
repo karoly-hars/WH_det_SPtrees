@@ -1,6 +1,6 @@
 Wormhole Detection in WSNs Using Spanning Trees
 ============================================
-This repository contains the python code for creating an arbitrary wireless sensor network, inserting a wormhole into the network and a detection algorithm for identifying the affected sensors. The detection approach was described in the following paper:
+This repository contains the python code for creating an arbitrary wireless sensor network, inserting a wormhole into the network, and a detection algorithm for identifying the affected sensors. The detection approach was described in the following paper:
 [Károly Harsányi, Attila Kiss, Tamás Szirányi: Wormhole detection in wireless sensor networks using spanning trees, 2018 IEEE International Conference on Future IoT Technologies (Future IoT)](https://ieeexplore.ieee.org/document/8325596/).
 
 

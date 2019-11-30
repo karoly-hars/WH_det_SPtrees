@@ -8,7 +8,7 @@ import argparse
 
 
 def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
-    """ Chooses root nodes randomly but evenly
+    """Chooses root nodes randomly but evenly.
 
     :param connectivity_graph_with_wormhole: The graph with a wormhole inserted
     :param min_dist: The desired minimum distance between two root nodes
@@ -33,7 +33,7 @@ def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
 
 
 def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpoints, make_plot=False):
-    """ Finds the wormholes in the input graph
+    """Finds the wormholes in the input graph.
 
     :param connectivity_graph_with_wormhole: The graph with a wormhole inserted
     :param root_nodes: IDs of the root nodes
@@ -42,7 +42,6 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
     :param make_plot: -
     :return: The list of candidate nodes
     """
-    
     var_matrix = np.zeros(shape=[len(root_nodes), len(connectivity_graph_with_wormhole)])
     
     if make_plot:
@@ -203,7 +202,7 @@ def main(args):
         plt.show()
 
 
-if __name__ == "__main__":
+def get_arguments():
     parser = argparse.ArgumentParser()
     # args for generating the network
     parser.add_argument("-deployment_type", help="deployment model. possible choices: \"grid\" and \"random\"",
@@ -231,9 +230,13 @@ if __name__ == "__main__":
     parser.add_argument("-make_plot", help="True/False for visualization", type=bool, default=False)
 
     args = parser.parse_args()
+    return args    
 
+
+if __name__ == "__main__":
+    args = get_arguments()
     print("Network type: {}, {}.".format(args.deployment_type, args.communication_model))
-    print("Number of sensors: {}, communication radius: {}, area of the observed region: {}.".format(args.num_nodes,
-                                                                                                     args.comm_radius,
-                                                                                                     args.side_len**2))
+    print("Number of sensors: {}, communication radius: {}, area of the observed region: {}.".format(
+        args.num_nodes, args.comm_radius, args.side_len**2))
+    
     main(args)

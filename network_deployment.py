@@ -6,7 +6,7 @@ import random
 
 
 def generate_square(num_nodes, radius, side_len):
-    """ Generates a network into a square shaped area using random placement, and unit disk graph communication model
+    """Generates a network into a square shaped area using random placement, and unit disk graph communication model.
 
     :param num_nodes: number of sensors.
     :param radius: communication radius of the sensors
@@ -42,7 +42,7 @@ def generate_square(num_nodes, radius, side_len):
 
 
 def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
-    """ Generates a network into a square shaped area using random placement, and QUD graph communication model
+    """Generates a network into a square shaped area using random placement, and QUD graph communication model.
 
     :param num_nodes: number of sensors.
     :param radius: communication radius of the sensors
@@ -88,7 +88,7 @@ def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
 
 
 def generate_grid(num_nodes, radius, side_len, noise=0.75):
-    """ Generates a network into a square shaped area using perturbed grid placement, and UDG communication model
+    """Generates a network into a square shaped area using perturbed grid placement, and UDG communication model.
 
     :param num_nodes: number of sensors.
     :param radius: communication radius of the sensors
@@ -133,7 +133,7 @@ def generate_grid(num_nodes, radius, side_len, noise=0.75):
 
 
 def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
-    """ Generates a network into a square shaped area using perturbed grid placement, and QUDG communication model
+    """Generates a network into a square shaped area using perturbed grid placement, and QUDG communication model.
 
     :param num_nodes: number of sensors.
     :param radius: communication radius of the sensors

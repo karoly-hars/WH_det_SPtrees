@@ -5,7 +5,7 @@ import random
 
 
 def insert_wormhole(positions, connectivity_graph, wormhole_radius, wormhole_type, min_dist):
-    """ Add wormhole to an input network graph
+    """Add wormhole to an input network graph.
 
     :param positions: Positions of the sensors in the network
     :param connectivity_graph: The network connectivity graph

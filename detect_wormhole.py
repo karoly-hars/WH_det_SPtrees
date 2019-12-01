@@ -8,7 +8,7 @@ import argparse
 
 
 def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
-    """Chooses root nodes randomly but evenly.
+    """Choose root nodes randomly but evenly.
 
     :param connectivity_graph_with_wormhole: The graph with a wormhole inserted
     :param min_dist: The desired minimum distance between two root nodes
@@ -33,7 +33,7 @@ def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
 
 
 def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpoints, make_plot=False):
-    """Finds the wormholes in the input graph.
+    """Find the wormholes in the input graph.
 
     :param connectivity_graph_with_wormhole: The graph with a wormhole inserted
     :param root_nodes: IDs of the root nodes
@@ -42,7 +42,7 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
     :param make_plot: -
     :return: The list of candidate nodes
     """
-    var_matrix = np.zeros(shape=[len(root_nodes), len(connectivity_graph_with_wormhole)])
+    var_matrix = np.zeros(shape=(len(root_nodes), len(connectivity_graph_with_wormhole)))
     
     if make_plot:
         plt.figure(1, figsize=(5, 10))
@@ -186,8 +186,9 @@ def main(args):
 
     if args.make_plot:
         plt.figure(2)
-        nx.draw_networkx(connectivity_graph, pos=positions, node_size=10, linewidths=0,
-                         edge_color="#00ff00", with_labels=False)
+        nx.draw_networkx(
+            connectivity_graph, pos=positions, node_size=10, linewidths=0, edge_color="#00ff00", with_labels=False
+        )
 
         for node in candidates:  # candidates = pink
             plt.plot(positions[node][0], positions[node][1], color="#ff99ff", marker="D", markersize=4)

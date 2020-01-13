@@ -16,19 +16,19 @@ def get_root_nodes(connectivity_graph_with_wormhole, min_dist):
     """
     nodes = [i for i in range(0, len(connectivity_graph_with_wormhole))]  # set of all nodes
     root_nodes = []
-    
+
     while len(nodes) != 0:
         # add a random point to the set of roots
         root_node = random.choice(nodes)
         root_nodes.append(root_node)
-        
-        # remove it from the 
+
+        # remove it from the
         distances = nx.shortest_path_length(connectivity_graph_with_wormhole, source=root_node)
         to_rem = [key for key in distances if distances[key] < min_dist]
         nodes = [x for x in nodes if x not in to_rem]
-    
+
     assert len(root_nodes) > 1, 'the number of root nodes should be at least 2. choose a smaller k parameter'
-    
+
     return root_nodes
 
 
@@ -43,48 +43,48 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
     :return: The list of candidate nodes
     """
     var_matrix = np.zeros(shape=(len(root_nodes), len(connectivity_graph_with_wormhole)))
-    
+
     if make_plot:
         plt.figure(1, figsize=(5, 10))
-    
+
     # run detection from each root node
     for idx, root_node in enumerate(root_nodes):
         print('running detection from root {}/{}'.format(idx+1, len(root_nodes)))
-        
+
         if make_plot:
             plt.subplot(len(root_nodes)+1, 1, (idx+1))
             plt.title('root {}:'.format(idx), loc='left')
-        
+
         # we do not test the root and its direct neighbors in this round
         to_bypass = [root_node] + list(connectivity_graph_with_wormhole.neighbors(root_node))
         original_distances = nx.shortest_path_length(connectivity_graph_with_wormhole, root_node)
 
         for node in range(len(connectivity_graph_with_wormhole)):
             if node not in to_bypass:
-                
+
                 tmp_graph = connectivity_graph_with_wormhole.copy()
                 nodes_to_delete = [node] + list(connectivity_graph_with_wormhole.neighbors(node))
-                
+
                 # delete the node and run a new BFS
                 for node_to_delete in nodes_to_delete:
                     tmp_graph.remove_node(node_to_delete)
                 new_distances = nx.shortest_path_length(tmp_graph, root_node)
-                
+
                 # calculate the distance differences
                 distance_differences = [abs(original_distances[key] - new_distances[key]) for key in new_distances]
-                
+
                 # calculate the variance of the distance differences and store it
                 variance_in_dd = np.var(distance_differences)
                 var_matrix[idx, node] = variance_in_dd
-                
+
                 if make_plot:
                     plt.plot(node, variance_in_dd, color='#00ff00', marker='.')
                     if node in endpoints:
                         plt.plot(node, variance_in_dd, 'bo')
-            
+
             # for the bypassed nodes store nan
             if node in to_bypass:
-                var_matrix[idx, node] = np.nan                
+                var_matrix[idx, node] = np.nan
 
     # calculate averages
     avgs = list()
@@ -92,16 +92,16 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
         to_avg = var_matrix[:, x]
         avg = np.nanmean(to_avg)
         avgs.append(avg)
-        
+
     final_threshold = np.mean(np.asarray(avgs))*threshold
     candidates = [x for x in range(len(avgs)) if avgs[x] > final_threshold]
-    
+
     # remove candidates with no neighbors among the other candidates
     inducted_graph = connectivity_graph_with_wormhole.subgraph(candidates)
     for cc in nx.connected_components(inducted_graph):
         if len(cc) == 1:
             candidates.remove(list(cc)[0])
-    
+
     if make_plot:
         plt.subplot(len(root_nodes)+1, 1, len(root_nodes)+1)
         for node in range(0, len(connectivity_graph_with_wormhole)):
@@ -111,7 +111,7 @@ def find_wormhole(connectivity_graph_with_wormhole, root_nodes, threshold, endpo
             if node in endpoints:
                 plt.plot(node, avgs[node], color='b', marker='o', markersize=3)
         plt.plot([0, len(connectivity_graph_with_wormhole)], [final_threshold, final_threshold], 'r-')
-    
+
     return candidates
 
 
@@ -159,7 +159,7 @@ def main(args):
 
     print('\nLambda threshold for detection(lambda): {}'.format(args.th))
     print('Make plot: {}'.format(args.make_plot))
-    
+
     print('\nRunning wormhole detection...')
     candidates = find_wormhole(connectivity_graph_with_wormhole, root_nodes,
                                args.th, endpoints1+endpoints2, args.make_plot)
@@ -195,11 +195,11 @@ def main(args):
 
         for endpoint in (endpoints1 + endpoints2):  # wormhole node = blue
             plt.plot(positions[endpoint][0], positions[endpoint][1],  color='b', marker='o', markersize=2)
-        
+
         for idx, root_node in enumerate(root_nodes):  # root nodes = black
             plt.plot(positions[root_node][0], positions[root_node][1], marker='D', color='k', markersize=4)
             plt.annotate(str(idx), xy=(positions[root_node][0], positions[root_node][1]))
-        
+
         plt.show()
 
 
@@ -233,13 +233,13 @@ def get_arguments():
     parser.add_argument('-make_plot', help='True/False for visualization', type=bool, default=False)
 
     args = parser.parse_args()
-    return args    
+    return args
 
 
 if __name__ == '__main__':
-    args = get_arguments()
+    args = get_arguments(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     print('Network type: {}, {}.'.format(args.deployment_type, args.communication_model))
     print('Number of sensors: {}, communication radius: {}, area of the observed region: {}.'.format(
         args.num_nodes, args.comm_radius, args.side_len**2))
-    
+
     main(args)

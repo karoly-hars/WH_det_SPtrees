@@ -205,7 +205,7 @@ def main(args):
 
 def get_arguments():
     """Collect command line arguments."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # args for generating the network
     parser.add_argument('-deployment_type', help='deployment model. possible choices: "grid" and "random"',
                         choices=['grid', 'random'], default='random')
@@ -237,7 +237,7 @@ def get_arguments():
 
 
 if __name__ == '__main__':
-    args = get_arguments(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    args = get_arguments()
     print('Network type: {}, {}.'.format(args.deployment_type, args.communication_model))
     print('Number of sensors: {}, communication radius: {}, area of the observed region: {}.'.format(
         args.num_nodes, args.comm_radius, args.side_len**2))

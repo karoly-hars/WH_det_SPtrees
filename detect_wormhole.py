@@ -207,30 +207,30 @@ def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # args for generating the network
-    parser.add_argument('--deployment_type', help='deployment model. possible choices: "grid" and "random"',
+    parser.add_argument('--deployment_type', help='Deployment model. Possible choices: "grid" and "random"',
                         choices=['grid', 'random'], default='random')
     parser.add_argument('--communication_model',
-                        help='communication model. possible choices: '
+                        help='Communication model. Possible choices: '
                              'unit-disk-graph->"UDG" and quasi-unit-disk-graph->"QUDG"',
                         choices=['UDG', 'QUDG'], default='UDG')
-    parser.add_argument('--num_nodes', help='the number of sensors in the network', type=int, default=900)
-    parser.add_argument('--comm_radius', help='the communication radius of the sensors', type=float, default=0.75)
-    parser.add_argument('--side_len', help='the size of the observed area', type=int, default=10)
+    parser.add_argument('--num_nodes', help='The number of sensors in the network.', type=int, default=900)
+    parser.add_argument('--comm_radius', help='The communication radius of the sensors.', type=float, default=0.75)
+    parser.add_argument('--side_len', help='The size of the observed area.', type=int, default=10)
 
     # args for wormhole insertion
-    parser.add_argument('--wormhole_type', help='wormhole_type. see insert_wormhole for examples', type=int,
+    parser.add_argument('--wormhole_type', help='Wormhole_type. See insert_wormhole.py for examples.', type=int,
                         choices=[1, 2, 3], default=3)
-    parser.add_argument('--wormhole_radius', help='radius of the wormholes nodes', type=float, default=0.5)
-    parser.add_argument('--wormhole_min_dist', help='minimum hop-distance between the wormholes endpoints', type=int,
+    parser.add_argument('--wormhole_radius', help='Radius of the wormholes nodes.', type=float, default=0.5)
+    parser.add_argument('--wormhole_min_dist', help='Minimum hop-distance between the wormholes endpoints.', type=int,
                         default=6)
 
     # args for the detection algorithm
-    parser.add_argument('--k', help='minimum hop-distance between the root nodes of the detection algorithm', type=int,
+    parser.add_argument('--k', help='Minimum hop-distance between the root nodes of the detection algorithm.', type=int,
                         default=7)
-    parser.add_argument('--th', help='classification threshold of the detection alg', type=float, default=5)
+    parser.add_argument('--th', help='Classification threshold of the detection alg.', type=float, default=5)
 
     # args for visualization
-    parser.add_argument('--make_plot', help='True/False for visualization', type=bool, default=False)
+    parser.add_argument('--make_plot', help='True/False for visualization.', type=bool, default=False)
 
     args = parser.parse_args()
     return args

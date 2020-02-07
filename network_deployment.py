@@ -14,7 +14,8 @@ def generate_square(num_nodes, radius, side_len):
     :return: A list of generated node positions and the network connectivity graph
     """
 
-    # try 1000 times, to generate a random graph with these parameters
+    # try to generate a random graph with these parameters 1000 times
+    # break if the random graph is connected
     for X in range(0, 1000):
         # make graph, add nodes and random positions
         connectivity_graph = nx.Graph()
@@ -52,7 +53,9 @@ def generate_square_quasi(num_nodes, radius, side_len, p=0.5):
     """
     radius2 = radius
     radius1 = radius * p
-    # try 1000 times, to generate a random graph with these parameters
+
+    # try to generate a random graph with these parameters 1000 times
+    # break if the random graph is connected
     for X in range(0, 1000):
         # make graph, add nodes and random positions
         connectivity_graph = nx.Graph()
@@ -98,7 +101,8 @@ def generate_grid(num_nodes, radius, side_len, noise=0.75):
     """
     assert (math.sqrt(num_nodes).is_integer()), 'the number of sensors must be a square number'
 
-    # try 1000 times, to generate a random graph with these parameters
+    # try to generate a random graph with these parameters 1000 times
+    # break if the random graph is connected
     for X in range(0, 1000):
         h = int(math.sqrt(num_nodes))
         node_dist = side_len / h
@@ -147,7 +151,8 @@ def generate_grid_quasi(num_nodes, radius, side_len, p=0.5, noise=0.75):
     radius2 = radius
     radius1 = radius * p
 
-    # try 1000 times, to generate a random graph with these parameters
+    # try to generate a random graph with these parameters 1000 times
+    # break if the random graph is connected
     for X in range(0, 1000):
         h = int(math.sqrt(num_nodes))
         node_dist = side_len / h

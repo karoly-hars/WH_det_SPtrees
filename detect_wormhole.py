@@ -120,18 +120,22 @@ def main(args):
 
     if args.deployment_type == 'random':
         if args.communication_model == 'UDG':
-            positions, connectivity_graph = network_deployment.generate_square(args.num_nodes, args.comm_radius,
-                                                                               args.side_len)
+            positions, connectivity_graph = network_deployment.generate_square(
+                args.num_nodes, args.comm_radius, args.side_len
+            )
         else:
-            positions, connectivity_graph = network_deployment.generate_square_quasi(args.num_nodes, args.comm_radius,
-                                                                                     args.side_len)
+            positions, connectivity_graph = network_deployment.generate_square_quasi(
+                args.num_nodes, args.comm_radius, args.side_len
+            )
     else:
         if args.communication_model == 'UDG':
-            positions, connectivity_graph = network_deployment.generate_grid(args.num_nodes, args.comm_radius,
-                                                                             args.side_len)
+            positions, connectivity_graph = network_deployment.generate_grid(
+                args.num_nodes, args.comm_radius, args.side_len
+            )
         else:
-            positions, connectivity_graph = network_deployment.generate_grid_quasi(args.num_nodes, args.comm_radius,
-                                                                                   args.side_len)
+            positions, connectivity_graph = network_deployment.generate_grid_quasi(
+                args.num_nodes, args.comm_radius, args.side_len
+            )
 
     print('Done.')
 
@@ -144,12 +148,11 @@ def main(args):
 
     print('\nWormhole type: {}, wormhole radius: {}, endpoints min. distance: {}'.
           format(args.wormhole_type, args.wormhole_radius, args.wormhole_min_dist))
+    
     print('Inserting wormhole...')
-    connectivity_graph_with_wormhole, endpoints1, endpoints2 = insert_wormhole.insert_wormhole(positions,
-                                                                                               connectivity_graph,
-                                                                                               args.wormhole_radius,
-                                                                                               args.wormhole_type,
-                                                                                               args.wormhole_min_dist)
+    connectivity_graph_with_wormhole, endpoints1, endpoints2 = insert_wormhole.insert_wormhole(
+        positions, connectivity_graph, args.wormhole_radius, args.wormhole_type, args.wormhole_min_dist
+    )
     print('Done.')
 
     print('\nMinimum root point distance(k): {}'.format(args.k))
@@ -161,8 +164,9 @@ def main(args):
     print('Make plot: {}'.format(args.make_plot))
 
     print('\nRunning wormhole detection...')
-    candidates = find_wormhole(connectivity_graph_with_wormhole, root_nodes,
-                               args.th, endpoints1+endpoints2, args.make_plot)
+    candidates = find_wormhole(
+        connectivity_graph_with_wormhole, root_nodes, args.th, endpoints1+endpoints2, args.make_plot
+    )
     print('Done.')
 
     # calculate confusion matrix
@@ -207,11 +211,11 @@ def get_arguments():
     """Collect command line arguments."""
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     # args for generating the network
-    parser.add_argument('--deployment_type', help='Deployment model. Possible choices: "grid" and "random"',
+    parser.add_argument('--deployment_type', help='Deployment model. Possible choices: "grid" and "random".',
                         choices=['grid', 'random'], default='random')
     parser.add_argument('--communication_model',
                         help='Communication model. Possible choices: '
-                             'unit-disk-graph->"UDG" and quasi-unit-disk-graph->"QUDG"',
+                             'unit-disk-graph->"UDG" and quasi-unit-disk-graph->"QUDG".',
                         choices=['UDG', 'QUDG'], default='UDG')
     parser.add_argument('--num_nodes', help='The number of sensors in the network.', type=int, default=900)
     parser.add_argument('--comm_radius', help='The communication radius of the sensors.', type=float, default=0.75)
@@ -240,6 +244,7 @@ if __name__ == '__main__':
     args = get_arguments()
     print('Network type: {}, {}.'.format(args.deployment_type, args.communication_model))
     print('Number of sensors: {}, communication radius: {}, area of the observed region: {}.'.format(
-        args.num_nodes, args.comm_radius, args.side_len**2))
+        args.num_nodes, args.comm_radius, args.side_len**2
+    ))
 
     main(args)
